@@ -2,10 +2,9 @@ import React from 'react';
 import { Card, CardImg,CardBody,CardText,CardTitle,} from 'reactstrap';
 // import {ListGroup,ListGroupItem,ListGroupItemHeading, ListGroupItemText} from 'reactstrap';
     
-    function RenderDish(dish){
-        if(dish!=null)
+    function RenderDish({dish}){
+        
     return(
-        <div className="row">
             <div className="col-12 col-md-5 m-1">
                 <Card>
                     <CardImg top src={dish.image} alt={dish.name} />
@@ -15,20 +14,10 @@ import { Card, CardImg,CardBody,CardText,CardTitle,} from 'reactstrap';
                     </CardBody>
                 </Card>
             </div>
-            
-            {RenderComments(dish.comments)}
-    
-        </div>
-        
     );
-    else
-    return(
-        <div></div>
-    );
-
     }
-    
-    function RenderComments(comments){
+    function RenderComments({comments}){
+            // const comments=dish.comments;
             const commentlist=comments.map((comment)=>{
                 // console.log(comment.id);
                 var options = { year: 'numeric', month: 'short', day: 'numeric' };
@@ -41,7 +30,7 @@ import { Card, CardImg,CardBody,CardText,CardTitle,} from 'reactstrap';
                         <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', options).format(date)}</p>
                     </li>
                 )
-            });
+            }); 
 
         return (
             <div className="col-12 col-md-5 m-1">
@@ -54,13 +43,23 @@ import { Card, CardImg,CardBody,CardText,CardTitle,} from 'reactstrap';
         );
     }
 
-const DishDetailed =(props)=>{
-    const dish=props.selectedDish;
+const DishDetailed = (props) =>{
+   const dish=props.dish;
+   if(dish!=null){
     return (
         <div className="container">
-        {RenderDish(dish)}
+            <div className="row">
+            <RenderDish dish={dish}/>
+            <RenderComments comments={dish.comments}/>
+            </div>    
         </div>
-    );
+    );}
+    else 
+        return(
+            <div></div>
+        );
     
 }
+
+
 export default DishDetailed;
