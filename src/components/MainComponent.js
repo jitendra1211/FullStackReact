@@ -7,9 +7,11 @@ import {COMMENTS} from '../shared/comments';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Home from './HomeComponent';
+import About from './AboutComponent';
 import Menu from './MenuComponent';
 import Contact from './ContactComponent';
 import DishDetailed from './DishDetailedComponent';
+
 
 class Main extends Component{
   constructor(props){
@@ -44,6 +46,7 @@ class Main extends Component{
         <Header/>
         <Switch>
             <Route path="/home" component={Homepage}/>
+            <Route path='/aboutus' component={()=><About leaders={this.state.leaders} />} />
             <Route exact path="/menu" component={()=><Menu dishes={this.state.dishes}/>}/>
             <Route path='/menu/:dishId' component={DishWithId} />
             <Route exact path='/contactus' component={Contact} />
