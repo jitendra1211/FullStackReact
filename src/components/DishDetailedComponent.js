@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Card, CardImg,CardBody,CardText,CardTitle,} from 'reactstrap';
 // import {ListGroup,ListGroupItem,ListGroupItemHeading, ListGroupItemText} from 'reactstrap';
-class DishDetailed extends Component{
     
-    renderDish(dish){
+    function RenderDish(dish){
         if(dish!=null)
     return(
         <div className="row">
@@ -17,7 +16,7 @@ class DishDetailed extends Component{
                 </Card>
             </div>
             
-            {this.renderComments(dish.comments)}
+            {RenderComments(dish.comments)}
     
         </div>
         
@@ -29,7 +28,7 @@ class DishDetailed extends Component{
 
     }
     
-    renderComments(comments){
+    function RenderComments(comments){
             const commentlist=comments.map((comment)=>{
                 // console.log(comment.id);
                 var options = { year: 'numeric', month: 'short', day: 'numeric' };
@@ -55,14 +54,13 @@ class DishDetailed extends Component{
         );
     }
 
-render () {
-    const dish=this.props.selectedDish;
+const DishDetailed =(props)=>{
+    const dish=props.selectedDish;
     return (
-        <div>
-        {this.renderDish(dish)}
+        <div className="container">
+        {RenderDish(dish)}
         </div>
     );
     
-}
 }
 export default DishDetailed;
