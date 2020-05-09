@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom';
             </div>
     );
     }
-    function RenderComments({comments}){
+    function RenderComments({comments,addComment,dishId}){
             // const comments=dish.comments;
             const commentlist=comments.map((comment)=>{
                 // console.log(comment.id);
@@ -40,7 +40,7 @@ import { Link } from 'react-router-dom';
                     {commentlist}
                     
                 </ul>
-                <CommentForm/>
+                <CommentForm dishId={dishId} addComment={addComment} />
             </div>
                 
         );
@@ -66,7 +66,10 @@ const DishDetailed = (props) =>{
             </div>
             <div className="row">
             <RenderDish dish={props.dish}/>
-            <RenderComments comments={props.comments}/>
+            <RenderComments comments={props.comments}
+             addComment={props.addComment}
+             dishId={props.dish.id}
+            />
             </div>    
         </div>
     );}
@@ -88,7 +91,7 @@ class CommentForm extends Component {
         this.state = {
           isModalOpen:false
         };
-
+        
       }
     toggleModal=()=>{
         this.setState({
@@ -96,9 +99,8 @@ class CommentForm extends Component {
           });
       }
       handleSubmit(values) {
-        console.log(JSON.stringify(values))
-        alert(JSON.stringify(values));
         this.toggleModal();
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
     }
       render() {
         return (
