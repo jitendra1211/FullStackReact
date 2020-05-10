@@ -5,11 +5,17 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
     function RenderDish({dish}){
         
     return(
             <div className="col-12 col-md-5 m-1">
+                <FadeTransform
+                in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
                 <Card>
                     <CardImg top src={baseUrl + dish.image} alt={dish.name} />
                     <CardBody>
@@ -17,22 +23,26 @@ import { baseUrl } from '../shared/baseUrl';
                     <CardText>{dish.description}</CardText>
                     </CardBody>
                 </Card>
+            </FadeTransform>
+                
             </div>
     );
     }
     function RenderComments({comments,postComment,dishId}){
-            // const comments=dish.comments;
+            
             const commentlist=comments.map((comment)=>{
-                // console.log(comment.id);
+
                 var options = { year: 'numeric', month: 'short', day: 'numeric' };
                 var date=new Date(Date.parse(comment.date));
                 console.log();
 
                 return(
+                    <Fade in>
                     <li key={comment.id.toString()}>
                         <p>{comment.comment}</p>
                         <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', options).format(date)}</p>
                     </li>
+                    </Fade>
                 )
             }); 
 
@@ -40,7 +50,9 @@ import { baseUrl } from '../shared/baseUrl';
             <div className="col-12 col-md-5 m-1">
                 <h4>Comments</h4>
                 <ul className="list-unstyled">
+                    <Stagger in>
                     {commentlist}
+                    </Stagger>
                     
                 </ul>
                 <CommentForm dishId={dishId} postComment={postComment} />
